@@ -1,3 +1,3 @@
 # TcpServer
 demo
-簡易T處理信息範例
+簡易處理信息範例
