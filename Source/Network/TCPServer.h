@@ -22,7 +22,7 @@ public:
 	void DelClient(int);
 	Manager* mgr;
 private:
-	QMap<int, QPair<TCPSocket*,QThread*>>m_client; //有多個客端時用這個去做處理
+	QMap<int, TCPSocket*>m_client; //有多個客端時用這個去做處理
 
 
 
