@@ -4,14 +4,16 @@
 #include "Core/Manager.h"
 //
 
-TCPSocket::TCPSocket(QObject* parent)
+TCPSocket::TCPSocket()
 {
-	this->setParent(parent);
+	
 }
 
 
 TCPSocket::~TCPSocket()
 {
+	qDebug() << "!client offline";
+	m_svr->DelClient(m_num);
 }
 void TCPSocket::SetNum(int num)
 {
@@ -61,11 +63,11 @@ void TCPSocket::OnReadyRead()
 				QJsonObject sett2 = d.object();
 				
 				QString text = sett2.value(QString("msg")).toString();
-				this->m_token =sett2.value(QString("replyToken")).toString(); ;
+				
 				qDebug() << text << "\t" << sett2.keys();
-				TcpServer* ptr = qobject_cast<TcpServer*>(this->parent());
+				
 			
-				ptr->mgr->HandleMsg(text.toUtf8());
+				m_svr->mgr->HandleMsg(text.toUtf8(),m_num);
 				this->data.remove(0, datalen);
 				
 				handling = false;
@@ -78,7 +80,7 @@ void TCPSocket::OnReadyRead()
 
 		}
 
-		qDebug() << "IDLE\t" << data<<data.size()<<"\t"<<this->data.size();
+		qDebug() << "IDLE\t" <<data.size();
 		//
 		handling = false;
 	}
@@ -87,11 +89,12 @@ void TCPSocket::OnReadyRead()
 }
 void TCPSocket::OnDisconnected() {
 	qDebug() << m_num << "\t disconnected";
-	TcpServer* msvr = qobject_cast<TcpServer*>(this->parent());
-	qDebug() << msvr;
+	this->deleteLater();
+	
+
 }
-QString TCPSocket::GetToken()
+void TCPSocket::SetServer(TcpServer* svr)
 {
-	return m_token;
+	m_svr = svr;
 }
 #include "TCPSocket.moc"

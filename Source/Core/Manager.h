@@ -10,7 +10,7 @@ class Manager :
 public:
 	Manager(QObject* parent=0);
 	~Manager();
-	void HandleMsg(QString);
+	void HandleMsg(QString,int);
 	TcpServer* server;
 	DAL* m_dal;
 private:

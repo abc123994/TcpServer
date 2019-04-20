@@ -35,22 +35,27 @@ void TcpServer::incomingConnection(qintptr handle)
 {
 	qDebug() << "client connected..";
 	// need to grab the socket
-	s = new TCPSocket(this);
+	TCPSocket* s = new TCPSocket();
 	s->SetNum(handle);
 	qDebug() << handle;
 	s->setSocketDescriptor(handle);
-	
-	qDebug() << s;
+	m_client.insert(handle, s);
+	s->SetServer(this);
+	QThread* socket_thread = new QThread(this);
+	this->moveToThread(socket_thread);
+
+	socket_thread->start();
 	connect(s, SIGNAL(readyRead()), s, SLOT(OnReadyRead()), Qt::DirectConnection);
 	connect(s, SIGNAL(disconnected()), s, SLOT(OnDisconnected()));
 }
-void TcpServer::ToClient(QString Content)
+void TcpServer::ToClient(QString Content,int client)
 {
 
 	QByteArray byteArray;
 	QDataStream stream(&byteArray, QIODevice::WriteOnly);
 	int length = Content.toUtf8().size();
 	stream << length;
+	auto s = m_client[client];
 	s->write(byteArray);
 	s->write(Content.toUtf8());
 	s->flush();
@@ -60,8 +65,8 @@ void TcpServer::DelClient(int num)
 	m_client.value(num)->deleteLater();
 	m_client.remove(num);
 }
-TCPSocket* TcpServer::GetClient()
+TCPSocket* TcpServer::GetClient(int client)
 {
-	return s;
+	return m_client[client];
 }
 #include "TcpServer.moc"

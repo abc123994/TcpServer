@@ -12,14 +12,13 @@ Manager::Manager(QObject* p)
 Manager::~Manager()
 {
 }
-void Manager::HandleMsg(QString str)
+void Manager::HandleMsg(QString str,int client)
 {
 	//handle msg here...
 	qDebug() << "handle msg:" << str;
 	//test response
 	
 	MSG_rep msg;
-	msg.replyToken = server->GetClient()->GetToken();
 	
 	//對信息處理 可以有個dispatcher去做
 	//if (str == "listall") {
@@ -36,6 +35,6 @@ void Manager::HandleMsg(QString str)
 	//response
 	QJsonDocument doc(msg.toJson());
 	QString strJson(doc.toJson(QJsonDocument::Compact));
-	server->ToClient(strJson);
+	server->ToClient(strJson,client);
 }
 #include "Manager.moc"

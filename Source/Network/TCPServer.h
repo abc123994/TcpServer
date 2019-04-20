@@ -16,13 +16,13 @@ public:
 
 	virtual void incomingConnection(qintptr handle);
 public:
-	QMap<int, TCPSocket*>m_client; //有多個客端時用這個去做處理
-	TCPSocket* GetClient();
-	void ToClient(QString);
+
+	TCPSocket* GetClient(int);
+	void ToClient(QString content,int client);
 	void DelClient(int);
 	Manager* mgr;
 private:
-	TCPSocket* s;
+	QMap<int, TCPSocket*>m_client; //有多個客端時用這個去做處理
 
 
 
