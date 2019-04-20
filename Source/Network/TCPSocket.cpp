@@ -59,8 +59,8 @@ void TCPSocket::OnReadyRead()
 				
 				QJsonDocument d = QJsonDocument::fromJson(tc->toUnicode(ary).toUtf8());
 				QJsonObject sett2 = d.object();
-				QJsonObject value = sett2["message"].toObject();
-				QString text = value.value(QString("text")).toString();
+				
+				QString text = sett2.value(QString("msg")).toString();
 				this->m_token =sett2.value(QString("replyToken")).toString(); ;
 				qDebug() << text << "\t" << sett2.keys();
 				TcpServer* ptr = qobject_cast<TcpServer*>(this->parent());
