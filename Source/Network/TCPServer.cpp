@@ -47,8 +47,11 @@ void TcpServer::incomingConnection(qintptr handle)
 void TcpServer::ToClient(QString Content)
 {
 
+	QByteArray byteArray;
+	QDataStream stream(&byteArray, QIODevice::WriteOnly);
 	int length = Content.toUtf8().size();
-
+	stream << length;
+	s->write(byteArray);
 	s->write(Content.toUtf8());
 	s->flush();
 }

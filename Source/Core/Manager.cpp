@@ -16,21 +16,22 @@ void Manager::HandleMsg(QString str)
 {
 	//handle msg here...
 	qDebug() << "handle msg:" << str;
+	//test response
 	
 	MSG_rep msg;
 	msg.replyToken = server->GetClient()->GetToken();
-
-	//對信息處理 可以有個dispatcher去做
-	if (str == "listall") {
-		msg.message= m_dal->ListAll();
-	}
-	else
-	{
-		//query db
-		msg.message = m_dal->TakeMsg(str);
-	}
-
 	
+	//對信息處理 可以有個dispatcher去做
+	//if (str == "listall") {
+	//	msg.message= m_dal->ListAll();
+	//}
+	//else
+	//{
+	//	//query db
+	//	msg.message = m_dal->TakeMsg(str);
+	//}
+
+	msg.message = "server ack... msg";
 
 	//response
 	QJsonDocument doc(msg.toJson());

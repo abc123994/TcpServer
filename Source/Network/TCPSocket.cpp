@@ -34,13 +34,13 @@ void TCPSocket::OnReadyRead()
 				handling = true;
 				QByteArray array2;
 				array2.reserve(4);
-				array2[0] = data[0];
-				array2[1] = data[1];
-				array2[2] = data[2];
-				array2[3] = data[3];
+				array2[0] = data[3];
+				array2[1] = data[2];
+				array2[2] = data[1];
+				array2[3] = data[0];
 			
 				memcpy(&datalen, array2, sizeof(int));
-				qDebug() << "msg byte len" << &datalen;
+				qDebug() << "msg byte len" << datalen;
 		
 			}
 			
