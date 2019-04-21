@@ -11,16 +11,16 @@ TcpServer::TcpServer(QObject* parent)
 	mgr = qobject_cast<Manager*>(parent);
 
 
-	qDebug("server on listen 1337 port");
+	
 
-	if (!listen(QHostAddress::LocalHost, 1337))
+	if (!listen(QHostAddress::AnyIPv4, 34567))
 	{
 		qDebug() << "Server could not start";
 	}
 	else
 	{
-	
-
+		
+		qDebug()<<"server on listen 34567 port";
 		qDebug() << "Server started!";
 	}
 }
