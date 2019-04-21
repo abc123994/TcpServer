@@ -21,7 +21,15 @@ void Manager::HandleMsg(QString type,QString Content,int client)
 	//handle msg here...
 	qDebug() << "handle msg:" << type;
 	//對信息處理 有個dispatcher去做
-	dispatcher->dispatch(type,Content,client);
+	if (dispatcher->dispatch(type, Content, client))
+	{
+		//
+	}
+	else
+	{
+		//here the message is not valid
+		qDebug() << "this message is not valid:\t" << type;
+	};
 
 }
 void Manager::OnHandleTypeA(QString Content,int client)
