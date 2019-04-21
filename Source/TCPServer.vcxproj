@@ -194,6 +194,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">moc %(RootDir)%(Directory)%(FileName)%(Extension) -o  %(RootDir)%(Directory)%(FileName).moc</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RelativeDir)%(FileName).moc</Outputs>
     </CustomBuild>
+    <ClInclude Include="Network\MsgDispatcher.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />

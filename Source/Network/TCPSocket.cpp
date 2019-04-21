@@ -62,12 +62,12 @@ void TCPSocket::OnReadyRead()
 				QJsonDocument d = QJsonDocument::fromJson(tc->toUnicode(ary).toUtf8());
 				QJsonObject sett2 = d.object();
 				
-				QString text = sett2.value(QString("msg")).toString();
-				
+				QString text = sett2.value(QString("message")).toString();
+				QString content = sett2.value(QString("Content")).toString();
 				qDebug() << text << "\t" << sett2.keys();
 				
 			
-				m_svr->mgr->HandleMsg(text.toUtf8(),m_num);
+				m_svr->mgr->HandleMsg(text.toUtf8(),content.toUtf8(),m_num);
 				this->data.remove(0, datalen);
 				
 				handling = false;
